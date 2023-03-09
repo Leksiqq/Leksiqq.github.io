@@ -8,17 +8,17 @@
     ".NETCoreApp,Version=v6.0": {
       "WpfMarkupExtensionDemo/1.0.0": {
         "dependencies": {
-          "Net.Leksi.WpfMarkupExtension": "1.0.0.1"
+          "Net.Leksi.WpfMarkupExtension": "1.0.0.2"
         },
         "runtime": {
           "WpfMarkupExtensionDemo.dll": {}
         }
       },
-      "Net.Leksi.WpfMarkupExtension/1.0.0.1": {
+      "Net.Leksi.WpfMarkupExtension/1.0.0.2": {
         "runtime": {
           "lib/net6.0-windows7.0/Net.Leksi.WpfMarkupExtension.dll": {
-            "assemblyVersion": "1.0.0.1",
-            "fileVersion": "1.0.0.1"
+            "assemblyVersion": "1.0.0.2",
+            "fileVersion": "1.0.0.2"
           }
         }
       }
@@ -30,12 +30,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Net.Leksi.WpfMarkupExtension/1.0.0.1": {
+    "Net.Leksi.WpfMarkupExtension/1.0.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1S3AAwAsQ6lUAVtcbomAgykAmhTngAKjuLOZEUOwUeHZmt5bJzxs3MEIbFWsXC8TslANu9Nc8loGi7uJ+YReFA==",
-      "path": "net.leksi.wpfmarkupextension/1.0.0.1",
-      "hashPath": "net.leksi.wpfmarkupextension.1.0.0.1.nupkg.sha512"
+      "sha512": "sha512-+UWRPCuZPfiMA/WmcJOC85OLdtp2fdkaOqTWss7Edr3/eaJxYtVMDvBTlhk05LXrlfp0uwXTFXFkP6u1PsQ7VA==",
+      "path": "net.leksi.wpfmarkupextension/1.0.0.2",
+      "hashPath": "net.leksi.wpfmarkupextension.1.0.0.2.nupkg.sha512"
     }
   }
 }

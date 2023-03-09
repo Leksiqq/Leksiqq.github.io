@@ -59,7 +59,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>32joTtmixxLJbtgu/WVSPEfpgmyejfhi2ZYKcSFfBRs=</dsig:DigestValue>
+      <dsig:DigestValue>7PTODeAgZWwkow59vwarYt1qVbA0A+/Kcux/zjR6TXw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="WpfMarkupExtensionDemo.deps.json" size="1158">
@@ -68,7 +68,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>vUllg75K/OBi83X8BqH+cvNV2mak4fEuP9hiHLGCS+o=</dsig:DigestValue>
+      <dsig:DigestValue>Qcl2PixAE2g0THSRyyYFc+BkexJ4Itb4291s2/x8mzM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="WpfMarkupExtensionDemo.dll" size="65536">
@@ -77,7 +77,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kEIi450GYpW83bTwiUMgFuBjmKU8iaSBDKrguEmEkVw=</dsig:DigestValue>
+      <dsig:DigestValue>KRj4gZdnZo9ScXTC1PkzUEnMpbzxVXEBB2KTfnxdYsA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="WpfMarkupExtensionDemo.exe" size="147968">
