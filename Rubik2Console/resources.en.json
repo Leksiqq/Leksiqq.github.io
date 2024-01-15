@@ -1,4 +1,8 @@
 {
   "about": "About",
-  "about_text": "The application allows you to calculate the states of a 2×2×2 Rubik's cube at various rotations, calculate the rotations necessary to transfer from some initial to some final state, and also for assembly."
+  "about_text": "The application allows you to calculate the states of a 2×2×2 Rubik's cube at various rotations, calculate the rotations necessary to transfer from some initial to some final state, and also for assembly.",
+  "more_info@href": "https://github.com/Leksiqq/rubik2.net/wiki/Demo-Rubik2Console",
+  "more_info": "More info...",
+  "install": "Install",
+  "click_once": "ClickOnce resources"
 }

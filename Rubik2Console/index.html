@@ -4,6 +4,7 @@
         body {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
+
         #top {
             position: absolute;
             top: 0px;
@@ -12,10 +13,12 @@
             height: 50px;
             background-color: #1c5280;
         }
+
         #content {
             position: absolute;
             top: 50px;
         }
+
         #ico {
             margin-left: 10px;
             margin-top: 10px;
@@ -23,6 +26,7 @@
             left: 0px;
             z-index: 0;
         }
+
         #name {
             position: absolute;
             left: 0px;
@@ -32,6 +36,7 @@
             margin-top: 20px;
             z-index: 1;
         }
+
         #bottom {
             position: absolute;
             left: 0px;
@@ -42,24 +47,29 @@
             text-align: center;
             padding-top: 10px;
         }
+
         #click_once {
             color: gray;
             text-decoration: none;
         }
+
         #lang {
             position: absolute;
             right: 0px;
             margin-top: 20px;
             margin-right: 10px;
         }
+
         #select_lang {
             background-color: #1c5280;
             border: none;
             color: white;
         }
+
         #setup {
             border-collapse: collapse;
         }
+
         #setup td {
             border: solid 1px black;
             padding: 5px;
@@ -67,8 +77,75 @@
     </style>
     <script lang="javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script lang="javascript">
+        let query = {};
+        function make_search() {
+            let search = '?';
+            for (let n in query) {
+                if (n !== 'lang' || query[n] !== 'ru') {
+                    search += n + '=' + query[n] + '&';
+                }
+            }
+            if (search.endsWith('&')) {
+                search = search.substring(0, search.length - 1);
+            }
+            else if (search == '?') {
+                search = '';
+            }
+            window.location.search = search;
+        }
         $(window).ready(() => {
-            alert('here1');
+            $('#select_lang').on('change', () => {
+                query.lang = $('#select_lang option:selected').attr('value');
+                make_search();
+            });
+            let lang = 'ru';
+            new Promise((resolve, reject) => {
+                if (window.location.search !== '') {
+                    let parts = window.location.search.substring(1).split('&');
+                    parts.forEach(v => {
+                        query[v.substring(0, v.indexOf('='))] = v.substring(v.indexOf('=') + 1);
+                    })
+                    if (query.lang !== undefined && query.lang !== 'ru') {
+                        if ($('#select_lang option[value=' + query.lang + ']').length > 0) {
+                            $.getJSON('resources.' + query.lang + '.json')
+                                .done(data => {
+                                    for (let k in data) {
+                                        let at = k.indexOf('@');
+                                        if (at > 0) {
+                                            $('#' + k.substring(0, at)).attr(k.substring(at + 1), data[k]);
+                                        }
+                                        else {
+                                            $('#' + k).html(data[k]);
+                                        }
+                                    }
+                                    lang = query.lang;
+                                    resolve();
+                                })
+                                .fail(() => reject());
+                        }
+                        else {
+                            reject();
+                        }
+                    }
+                    else {
+                        resolve();
+                    }
+                }
+                else {
+                    resolve();
+                }
+            })
+                .then(() => {
+                    query.lang = lang;
+                    $('#select_lang option:selected').attr('selected', null);
+                    $('#select_lang option[value=' + lang + ']').attr('selected', 'selected');
+                })
+                .catch(() => {
+                    query.lang = lang;
+                    $('#select_lang option:selected').attr('selected', null);
+                    $('#select_lang option[value=' + lang + ']').attr('selected', 'selected');
+                    make_search();
+                });
         });
     </script>
 </head>
@@ -86,12 +163,12 @@
     </div>
     <div id="content">
         <h3 id="about">О программе</h3>
-        <span id="about_text">
+        <p id="about_text">
             Приложение позволяет расчитывать состояния кубика Рубика 2×2×2 при различных поворотах, вычислять повороты, необходимые для перевода из некоторого начального в некоторое конечное
             состояние, а также для сборки.
-        </span>
-        <a href="https://github.com/Leksiqq/rubik2.net/wiki/%D0%94%D0%B5%D0%BC%D0%BE-Rubik2Console" target="_blank">Подробнее...</a>
-        <h3>Установить</h3>
+        </p>
+        <p><a id="more_info" href="https://github.com/Leksiqq/rubik2.net/wiki/%D0%94%D0%B5%D0%BC%D0%BE-Rubik2Console" target="_blank">Подробнее...</a></p>
+        <h3 id="install">Установить</h3>
         <table id="setup">
             <tr>
                 <td>net8.0-windows (x64)</td>
