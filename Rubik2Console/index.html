@@ -1,9 +1,111 @@
-<html>
-  <head>
+﻿<html>
+<head>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #top {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 50px;
+            background-color: #1c5280;
+        }
+        #content {
+            position: absolute;
+            top: 50px;
+        }
+        #ico {
+            margin-left: 10px;
+            margin-top: 10px;
+            position: absolute;
+            left: 0px;
+            z-index: 0;
+        }
+        #name {
+            position: absolute;
+            left: 0px;
+            color: white;
+            font-size: xx-large;
+            margin-left: 20px;
+            margin-top: 20px;
+            z-index: 1;
+        }
+        #bottom {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            width: 100%;
+            height: 40px;
+            background-color: lightgray;
+            text-align: center;
+            padding-top: 10px;
+        }
+        #click_once {
+            color: gray;
+            text-decoration: none;
+        }
+        #lang {
+            position: absolute;
+            right: 0px;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+        #select_lang {
+            background-color: #1c5280;
+            border: none;
+            color: white;
+        }
+        #setup {
+            border-collapse: collapse;
+        }
+        #setup td {
+            border: solid 1px black;
+            padding: 5px;
+        }
+    </style>
+    <script lang="javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script lang="javascript">
-      alert('here');	
+        $(window).load(() => {
+            alert('here1');
+        });
     </script>
-  </head>
-  <body>
-  </body>	
+</head>
+<body>
+    <div id="top">
+
+        <div id="name">Rubik2Console</div>
+        <img id="ico" src="ico.jpg" />
+        <div id="lang">
+            <select id="select_lang">
+                <option value="ru" selected="selected">Русский</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </div>
+    <div id="content">
+        <h3 id="about">О программе</h3>
+        <span id="about_text">
+            Приложение позволяет расчитывать состояния кубика Рубика 2×2×2 при различных поворотах, вычислять повороты, необходимые для перевода из некоторого начального в некоторое конечное
+            состояние, а также для сборки.
+        </span>
+        <a href="https://github.com/Leksiqq/rubik2.net/wiki/%D0%94%D0%B5%D0%BC%D0%BE-Rubik2Console" target="_blank">Подробнее...</a>
+        <h3>Установить</h3>
+        <table id="setup">
+            <tr>
+                <td>net8.0-windows (x64)</td>
+                <td><a href="net8/Rubik2Console.application">Rubik2Console</a></td>
+            </tr>
+            <tr>
+                <td>net6.0-windows (x64)</td>
+                <td><a href="net6/Rubik2Console.application">Rubik2Console</a></td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="bottom">
+        <a id="click_once" href="https://go.microsoft.com/fwlink/?linkid=2146276" target="_blank">Ресурсы ClickOnce</a>
+    </div>
+</body>
 </html>

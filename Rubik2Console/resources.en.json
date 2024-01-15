@@ -1,0 +1,4 @@
+{
+  "about": "About",
+  "about_text": "The application allows you to calculate the states of a 2×2×2 Rubik's cube at various rotations, calculate the rotations necessary to transfer from some initial to some final state, and also for assembly."
+}
