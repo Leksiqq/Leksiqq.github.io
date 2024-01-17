@@ -1,0 +1,46 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Rubik2Console/1.0.0": {
+        "dependencies": {
+          "Net.Leksi.LibRubik2": "1.0.8"
+        },
+        "runtime": {
+          "Rubik2Console.dll": {}
+        },
+        "resources": {
+          "ru/Rubik2Console.resources.dll": {
+            "locale": "ru"
+          }
+        }
+      },
+      "Net.Leksi.LibRubik2/1.0.8": {
+        "runtime": {
+          "lib/net6.0-windows7.0/Net.Leksi.LibRubik2.dll": {
+            "assemblyVersion": "1.0.8.0",
+            "fileVersion": "1.0.8.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Rubik2Console/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Net.Leksi.LibRubik2/1.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ta++bmpRHcAZmTI9MhcodWSieZnSWaByRxt3OtsO3WxjAN0U0fz/cFv70C1gGnToDXeZUXF5mr+dvDqqg8Rp6g==",
+      "path": "net.leksi.librubik2/1.0.8",
+      "hashPath": "net.leksi.librubik2.1.0.8.nupkg.sha512"
+    }
+  }
+}
