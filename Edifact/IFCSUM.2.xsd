@@ -1,0 +1,3563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- UN/D97B -->
+<!-- The file was automatically generated -->
+<!-- Don't edit! -->
+<xs:schema targetNamespace="http://example.com/EDIFACT" xmlns="http://example.com/EDIFACT" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eu="http://leksi.net/EDIFACT/utility" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="segments.xsd" />
+  <xs:complexType name="MESSAGE">
+    <xs:annotation>
+      <xs:appinfo eu:name="messageIdentifier">IFCSUM:UN:D:97B</xs:appinfo>
+      <xs:appinfo eu:name="suffix">.2</xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-MESSAGE">
+        <xs:sequence id="structure">
+          <xs:choice minOccurs="0">
+            <xs:sequence>
+              <xs:element name="UNB" type="UNB" minOccurs="0" />
+              <xs:element name="UNG" type="UNG" minOccurs="0" />
+              <xs:element name="UNH" type="UNH" minOccurs="0" />
+            </xs:sequence>
+            <xs:sequence>
+              <xs:element name="UIB" type="UIB" minOccurs="0" />
+              <xs:element name="UIH" type="UIH" minOccurs="0" />
+            </xs:sequence>
+          </xs:choice>
+          <xs:element name="BGM" type="BGM">
+            <xs:annotation>
+              <xs:documentation eu:name="name">Beginning of message</xs:documentation>
+              <xs:documentation eu:name="description">A segment to indicate the beginning of the message and to
+transmit identifying number (e.g. Master B/L, Master AWB etc.),
+type, date and the function of the message.</xs:documentation>
+              <xs:documentation eu:name="position">0020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="DTM" type="DTM" minOccurs="0" maxOccurs="9">
+            <xs:annotation>
+              <xs:documentation eu:name="name">Date/time/period</xs:documentation>
+              <xs:documentation eu:name="description">A segment to specify date/time of the document/message.</xs:documentation>
+              <xs:documentation eu:name="position">0030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SG4" minOccurs="0" maxOccurs="9">
+            <xs:annotation>
+              <xs:documentation eu:name="description">A group of segments to identify a party and related contacts
+and references.</xs:documentation>
+              <xs:documentation eu:name="position">0190</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="NAD" type="NAD.1">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Name and address</xs:documentation>
+                    <xs:documentation eu:name="description">A segment to identify the party's name, address and
+function.</xs:documentation>
+                    <xs:documentation eu:name="position">0200</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="SG8" minOccurs="0" maxOccurs="9">
+            <xs:annotation>
+              <xs:documentation eu:name="description">A group of segments to describe all transport details of the
+voyage/flight or consolidation and of all parties involved.</xs:documentation>
+              <xs:documentation eu:name="position">0360</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="TDT" type="TDT">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Details of transport</xs:documentation>
+                    <xs:documentation eu:name="description">A segment to indicate information related to a certain stage
+of the transport, such as mode, means, type of means of
+transport, carrier, voyage/flight number, etc.</xs:documentation>
+                    <xs:documentation eu:name="position">0370</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="LOC" type="LOC" minOccurs="0" maxOccurs="9">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Place/location identification</xs:documentation>
+                    <xs:documentation eu:name="description">A segment indicating relevant locations related to the
+transport of the consolidation (e.g. place of loading, place
+of discharge, transhipment place etc.) dependent on the
+transport stage.</xs:documentation>
+                    <xs:documentation eu:name="position">0390</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="DTM" type="DTM" minOccurs="0" maxOccurs="9">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Date/time/period</xs:documentation>
+                    <xs:documentation eu:name="description">A segment indicating pertinent date(s) and time(s) (e.g.
+date of departure/arrival etc.) dependent on the transport
+stage.</xs:documentation>
+                    <xs:documentation eu:name="position">0400</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="SG19" minOccurs="0" maxOccurs="9999">
+            <xs:annotation>
+              <xs:documentation eu:name="description">A segment group to give information about all consignments
+included in a voyage/flight or consolidation. The segment group
+can be used in two different manners to serve different
+approaches to consolidate messages:
+- Short form consolidation message
+In this situation, single consignment based functional messages
+(e.g. booking and/or instruction messages) have been sent on a
+progressive basis between exchanging partners (e.g. freight
+forwarder on the export side to freight forwarder on the import
+side).
+When the loading of the vessel/aircraft or consolidation is
+complete the IFCSUM-message will be sent and will use the
+CNI-segments to identify the transport document/message number
+(e.g. bill of lading, air-way bill, etc.) of every consignment,
+the details of which have already been sent as separate single
+consignment based messages (e.g. booking and/or instruction
+messages) or which will be sent as separate single consignment
+based messages following the IFCSUM-message using the option of
+grouping with the UNG-service-segment in a transmission.
+When the carrier himself loads consignments in a container or
+ULD the segment SGP and/or TPL following the CNI can be used to
+indicate in which equipment specified in the EQD-group on top
+level and/or which means of transport specified in the
+TDT-group on top level the consignment is loaded.
+Thus the short form IFCSUM-message operates as a reconciliation
+and control statement.
+- Extended form consolidation message
+In this situation, the data for each individual consignment has
+NOT been sent to the receiving partner by means of single
+consignment based messages (e.g. booking and/or instruction
+messages) separate to the IFCSUM message. In these
+circumstances it is possible to include the details of each
+consignment into the IFCSUM-message. In that case the segment
+(group) SGP and TPL following the segment CNI will not be used.
+For every consignment the complete structure of a single
+consignment based message can be used starting with the segment
+CNI replacing the BGM.
+Thus the extended form IFCSUM-message has not the function of
+referencing but to show as full a set of consignment data as is
+necessary to meet the requirements of type of consolidation
+message being constructed, e.g. Cargo vs. Full Freight.</xs:documentation>
+              <xs:documentation eu:name="position">0900</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="CNI" type="CNI">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Consignment information</xs:documentation>
+                    <xs:documentation eu:name="description">A segment to indicate consignments included in the
+consolidation using the transport document/message number or
+to replace the segment BGM of a single consignment based
+message structure.</xs:documentation>
+                    <xs:documentation eu:name="position">0910</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="FTX" type="FTX.1" minOccurs="0" maxOccurs="99">
+                  <xs:annotation>
+                    <xs:documentation eu:name="name">Free text</xs:documentation>
+                    <xs:documentation eu:name="description">A segment to specify free form or processable supplementary
+information, such as status of transport, remarks to be
+printed on the transport documents (where required),
+consignment remarks, insurance instructions, etc., or any
+other additional information.</xs:documentation>
+                    <xs:documentation eu:name="position">1090</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="SG26" minOccurs="0" maxOccurs="999">
+                  <xs:annotation>
+                    <xs:documentation eu:name="description">A group of segments containing a reference and constants
+which apply to the entire consignment.</xs:documentation>
+                    <xs:documentation eu:name="position">1160</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="RFF" type="RFF.1">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Reference</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to express a reference which applies to the
+entire consignment such as: the document/message number
+that is to be updated by this very message (according to
+data element 1225 Message Function, Coded in segment
+BGM), booking reference, order number, insurance
+contract, etc.</xs:documentation>
+                          <xs:documentation eu:name="position">1170</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="SG30" minOccurs="0" maxOccurs="99">
+                  <xs:annotation>
+                    <xs:documentation eu:name="description">A group of segments to specify charge calculations
+associated with the transport.</xs:documentation>
+                    <xs:documentation eu:name="position">1340</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="TCC" type="TCC">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Transport charge/rate calculations</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify charge.</xs:documentation>
+                          <xs:documentation eu:name="position">1350</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="PRI" type="PRI" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Price details</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify price details such as price (e.g.
+100 dollar) and unit price basis (e.g. per 1000
+kilograms).</xs:documentation>
+                          <xs:documentation eu:name="position">1390</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="PCD" type="PCD" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Percentage details</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to indicate the applicable reduction or
+surcharge percentage details.</xs:documentation>
+                          <xs:documentation eu:name="position">1410</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="MOA" type="MOA" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Monetary amount</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify a monetary amount, such as prepaid
+amount, discount or total amount.</xs:documentation>
+                          <xs:documentation eu:name="position">1420</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="QTY" type="QTY" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Quantity</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to indicate a quantity, for example actual
+weight, declared weight or chargeable weight.</xs:documentation>
+                          <xs:documentation eu:name="position">1430</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="SG31" minOccurs="0" maxOccurs="99">
+                  <xs:annotation>
+                    <xs:documentation eu:name="description">A group of segments to indicate details of the movement of
+goods such as mode and means of transport, locations,
+departure, and arrival date(s) and time(s).</xs:documentation>
+                    <xs:documentation eu:name="position">1440</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="TDT" type="TDT">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Details of transport</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to indicate information related to a certain
+stage of the transport, such as mode, means and carrier.</xs:documentation>
+                          <xs:documentation eu:name="position">1450</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="DTM" type="DTM" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Date/time/period</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to indicate departure/arrival date and time.</xs:documentation>
+                          <xs:documentation eu:name="position">1460</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="SG32" minOccurs="0" maxOccurs="99">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify a location and date/time
+related to this leg of transport.</xs:documentation>
+                          <xs:documentation eu:name="position">1480</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="LOC" type="LOC">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Place/location identification</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to indicate a location such as origin,
+destination, stop off, etc. related to this leg of
+transport.</xs:documentation>
+                                <xs:documentation eu:name="position">1490</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="SG41" minOccurs="0" maxOccurs="999">
+                  <xs:annotation>
+                    <xs:documentation eu:name="description">A group of segments to describe the goods items for which
+transport is undertaken.</xs:documentation>
+                    <xs:documentation eu:name="position">1870</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="GID" type="GID">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Goods item details</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to identify a goods item for which transport is
+undertaken. A goods item can be identified by up to three
+levels of packaging.</xs:documentation>
+                          <xs:documentation eu:name="position">1880</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="LOC" type="LOC" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Place/location identification</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify a country associated with a goods
+item, such as country of origin, or country of
+destination.</xs:documentation>
+                          <xs:documentation eu:name="position">1930</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="PIA" type="PIA" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Additional product id</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify article numbers.</xs:documentation>
+                          <xs:documentation eu:name="position">1950</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="FTX" type="FTX.1" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Free text</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify processable supplementary
+information relating to the goods item.</xs:documentation>
+                          <xs:documentation eu:name="position">1970</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="SG43" minOccurs="0" maxOccurs="99">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify measurements applicable to
+a goods item.</xs:documentation>
+                          <xs:documentation eu:name="position">2020</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="MEA" type="MEA.1">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Measurements</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify measurements, other than
+dimensions, applicable to a goods item.</xs:documentation>
+                                <xs:documentation eu:name="position">2030</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="EQN" type="EQN" minOccurs="0">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Number of units</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify the number of equipment units to
+each of which the given measurement applies.</xs:documentation>
+                                <xs:documentation eu:name="position">2040</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG44" minOccurs="0" maxOccurs="99">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify dimensions applicable to a
+goods item.</xs:documentation>
+                          <xs:documentation eu:name="position">2050</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="DIM" type="DIM">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Dimensions</xs:documentation>
+                                <xs:documentation eu:name="description">To specify dimensions applicable to a goods item.</xs:documentation>
+                                <xs:documentation eu:name="position">2060</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG45" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to identify references to a goods
+item.</xs:documentation>
+                          <xs:documentation eu:name="position">2080</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="RFF" type="RFF.1">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Reference</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to identify a reference to a goods item.</xs:documentation>
+                                <xs:documentation eu:name="position">2090</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG46" minOccurs="0" maxOccurs="999">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify marks and numbers of a
+goods item.</xs:documentation>
+                          <xs:documentation eu:name="position">2110</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="PCI" type="PCI">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Package identification</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify marks and numbers of a good item.</xs:documentation>
+                                <xs:documentation eu:name="position">2120</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG52" minOccurs="0" maxOccurs="999">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify the distribution of a
+goods item among the transport equipment.</xs:documentation>
+                          <xs:documentation eu:name="position">2330</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="SGP" type="SGP">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Split goods placement</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to identify the equipment in which goods are
+transported.</xs:documentation>
+                                <xs:documentation eu:name="position">2340</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG55" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify dangerous goods details
+related to the goods item. One goods item may be in
+different dangerous goods classes.</xs:documentation>
+                          <xs:documentation eu:name="position">2480</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="DGS" type="DGS.1">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Dangerous goods</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to indicate the class of dangerous goods,
+packing group, etc.</xs:documentation>
+                                <xs:documentation eu:name="position">2490</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="FTX" type="FTX.1" minOccurs="0" maxOccurs="99">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Free text</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify the dangerous goods technical
+name and to specify any additional dangerous goods
+information.</xs:documentation>
+                                <xs:documentation eu:name="position">2500</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="SG57" minOccurs="0" maxOccurs="9">
+                              <xs:annotation>
+                                <xs:documentation eu:name="description">A group of segments to identify dangerous goods
+measurements.</xs:documentation>
+                                <xs:documentation eu:name="position">2540</xs:documentation>
+                              </xs:annotation>
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="MEA" type="MEA.1">
+                                    <xs:annotation>
+                                      <xs:documentation eu:name="name">Measurements</xs:documentation>
+                                      <xs:documentation eu:name="description">A segment to specify measurements of the dangerous
+goods.</xs:documentation>
+                                      <xs:documentation eu:name="position">2550</xs:documentation>
+                                    </xs:annotation>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="SG58" minOccurs="0" maxOccurs="999">
+                              <xs:annotation>
+                                <xs:documentation eu:name="description">A group of segments to specify the distribution of the
+dangerous goods among the transport equipment.</xs:documentation>
+                                <xs:documentation eu:name="position">2570</xs:documentation>
+                              </xs:annotation>
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="SGP" type="SGP">
+                                    <xs:annotation>
+                                      <xs:documentation eu:name="name">Split goods placement</xs:documentation>
+                                      <xs:documentation eu:name="description">A segment to identify the equipment in which the
+dangerous goods are transported.</xs:documentation>
+                                      <xs:documentation eu:name="position">2580</xs:documentation>
+                                    </xs:annotation>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="SG60" minOccurs="0" maxOccurs="999">
+                  <xs:annotation>
+                    <xs:documentation eu:name="description">A group of segments to specify equipment in which goods are
+transported.</xs:documentation>
+                    <xs:documentation eu:name="change">|</xs:documentation>
+                    <xs:documentation eu:name="position">2620</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="EQD" type="EQD.1">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Equipment details</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify equipment, and equipment size and
+type used in the transport.</xs:documentation>
+                          <xs:documentation eu:name="position">2630</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="MEA" type="MEA.1" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Measurements</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify measurements, other than dimensions,
+associated with the equipment, such as weight.</xs:documentation>
+                          <xs:documentation eu:name="position">2660</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="DIM" type="DIM" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Dimensions</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify dimensions applicable to equipment.</xs:documentation>
+                          <xs:documentation eu:name="position">2670</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="SEL" type="SEL.1" minOccurs="0" maxOccurs="99">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Seal number</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to identify seal and seal issuer associated
+with the equipment.</xs:documentation>
+                          <xs:documentation eu:name="position">2680</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="HAN" type="HAN" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Handling instructions</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify handling instructions for specified
+equipment.</xs:documentation>
+                          <xs:documentation eu:name="position">2700</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="FTX" type="FTX.1" minOccurs="0" maxOccurs="9">
+                        <xs:annotation>
+                          <xs:documentation eu:name="name">Free text</xs:documentation>
+                          <xs:documentation eu:name="description">A segment to specify processable supplementary
+information associated with the equipment.</xs:documentation>
+                          <xs:documentation eu:name="position">2720</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="SG61" minOccurs="0" maxOccurs="999">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify charges associated with
+the equipment.</xs:documentation>
+                          <xs:documentation eu:name="change">|</xs:documentation>
+                          <xs:documentation eu:name="position">2740</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="TCC" type="TCC">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Transport charge/rate calculations</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify a charge associated with the
+equipment.</xs:documentation>
+                                <xs:documentation eu:name="position">2750</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="PRI" type="PRI" minOccurs="0">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Price details</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify price details such as price (e.g.
+100 dollar) and unit price basis (e.g. per 1000
+kilograms).</xs:documentation>
+                                <xs:documentation eu:name="position">2770</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="PCD" type="PCD" minOccurs="0">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Percentage details</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to indicate the applicable reduction or
+surcharge percentage details.</xs:documentation>
+                                <xs:documentation eu:name="position">2790</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="MOA" type="MOA" minOccurs="0" maxOccurs="9">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Monetary amount</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to specify a monetary amount, such as
+prepaid amount, discount or total amount.</xs:documentation>
+                                <xs:documentation eu:name="position">2800</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                            <xs:element name="QTY" type="QTY" minOccurs="0" maxOccurs="9">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Quantity</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to indicate a quantity, for example actual
+weight, declared weight or chargeable weight.</xs:documentation>
+                                <xs:documentation eu:name="position">2810</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="SG63" minOccurs="0" maxOccurs="99">
+                        <xs:annotation>
+                          <xs:documentation eu:name="description">A group of segments to specify the attached equipment and
+related number of pieces.</xs:documentation>
+                          <xs:documentation eu:name="position">2850</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="EQA" type="EQA.1">
+                              <xs:annotation>
+                                <xs:documentation eu:name="name">Attached equipment</xs:documentation>
+                                <xs:documentation eu:name="description">A segment to identify attached or related equipment
+such as a chassis attached to a container.</xs:documentation>
+                                <xs:documentation eu:name="position">2860</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MESSAGE" type="MESSAGE" />
+  <xs:complexType name="D1153.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Reference qualifier</xs:documentation>
+      <xs:documentation eu:name="description">Code giving specific meaning to a reference segment or a
+reference number.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="BN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Booking reference number</xs:documentation>
+            <xs:documentation eu:name="description">[1016] Reference number assigned by the carrier or his
+agent when cargo space is reserved prior to loading.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignor's reference number</xs:documentation>
+            <xs:documentation eu:name="description">[1140] Reference number assigned by a consignor to a
+particular shipment for his own purposes or for those of
+the consignee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZBI" />
+        <xs:enumeration value="ZSU" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="C506.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">REFERENCE</xs:documentation>
+      <xs:documentation eu:name="description">Identification of a reference.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="D1153" type="D1153.1">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Reference qualifier</xs:documentation>
+          <xs:documentation eu:name="position">010</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D1154" type="D1154" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Reference number</xs:documentation>
+          <xs:documentation eu:name="position">020</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D1156" type="D1156" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Line number</xs:documentation>
+          <xs:documentation eu:name="position">030</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D4000" type="D4000" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Reference version number</xs:documentation>
+          <xs:documentation eu:name="position">040</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RFF.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">REFERENCE</xs:documentation>
+      <xs:documentation eu:name="function">To specify a reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="C506" type="C506.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">REFERENCE</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D3035.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Party qualifier</xs:documentation>
+      <xs:documentation eu:name="description">Code giving specific meaning to a party.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="AA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to be billed (AAR Accounting rule 11)</xs:documentation>
+            <xs:documentation eu:name="description">Party to be billed in accordance with AAR Accounting rule
+11.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer's agent/representative</xs:documentation>
+            <xs:documentation eu:name="description">Third party who arranged the purchase of merchandise on
+behalf of the actual buyer.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Declarant's agent/representative</xs:documentation>
+            <xs:documentation eu:name="description">Any natural or legal person who makes a declaration to an
+official body on behalf of another natural or legal
+person, where legally permitted (CCC).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transit principal</xs:documentation>
+            <xs:documentation eu:name="description">Natural or legal person responsible for the satisfactory
+performance of a Customs transit operation. Source: CCC.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Agent/representative</xs:documentation>
+            <xs:documentation eu:name="description">(3196) Party authorized to act on behalf of another
+party.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transit principal's agent/representative</xs:documentation>
+            <xs:documentation eu:name="description">Agent acting on behalf of the transit principal (CCC).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Successful job applicant</xs:documentation>
+            <xs:documentation eu:name="description">Person who has been chosen for a job.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party issuing mutually agreed codes</xs:documentation>
+            <xs:documentation eu:name="description">The party which has issued all mutually agreed codes used
+in the message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Acknowledgement recipient</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom acknowledgement should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Principal</xs:documentation>
+            <xs:documentation eu:name="description">(3340) Party accepting liability for goods held or moving
+(e.g. transit) under a Customs authorization and - when
+applicable - a guarantee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authorized official</xs:documentation>
+            <xs:documentation eu:name="description">Employee of a company or firm authorized to act on behalf
+of that company or firm e.g. to make a Customs
+declaration.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Approved importer</xs:documentation>
+            <xs:documentation eu:name="description">Person or company which is authorised by the relevant
+Customs authority to import goods without payment all
+taxes or specific taxes at the point of entry into the
+country.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Account of</xs:documentation>
+            <xs:documentation eu:name="description">Party account is assigned to.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Accepting party</xs:documentation>
+            <xs:documentation eu:name="description">(3352) Party accepting goods, products, services etc.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Approved consignor</xs:documentation>
+            <xs:documentation eu:name="description">Person or company approved by the relevant authority in
+the country to pack and export specific goods under
+Customs supervision.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authorized exporter</xs:documentation>
+            <xs:documentation eu:name="description">Exporter authorized/approved by Customs for special
+Customs procedures e.g. simplified procedure.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Account servicing financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the financial institution servicing the
+account(s).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authorized importer</xs:documentation>
+            <xs:documentation eu:name="description">Importer authorized/approved by Customs for special
+Customs procedures e.g. simplified procedure.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authorized trader (transit)</xs:documentation>
+            <xs:documentation eu:name="description">Trader authorized/approved by Customs for special transit
+procedures e.g. simplified procedure.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authorizing official</xs:documentation>
+            <xs:documentation eu:name="description">Party that has delegated the authority to take a certain
+action on behalf of a company or agency.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Applicant's bank</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution which is requested to issue the
+documentary credit.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Authenticating party</xs:documentation>
+            <xs:documentation eu:name="description">Party which certifies that a document is authentic.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Animal being investigated</xs:documentation>
+            <xs:documentation eu:name="description">Animal being investigated.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Issuing bank</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution which issues the documentary
+credit, if the applicant's bank is not acting as the
+issuing bank.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="B1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact bank 1</xs:documentation>
+            <xs:documentation eu:name="description">Identifies an additional bank which must be informed of
+certain aspects of the message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="B2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact bank 2</xs:documentation>
+            <xs:documentation eu:name="description">Identifies an additional bank which must be informed of
+certain aspects of the message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Booking agent</xs:documentation>
+            <xs:documentation eu:name="description">Party acting as a booking office for transport and
+forwarding services.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer's bank</xs:documentation>
+            <xs:documentation eu:name="description">[3420] Bank employed by the buyer to make payment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Negotiating bank</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution to whom a negotiable documentary
+credit is directed.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit reimbursing bank</xs:documentation>
+            <xs:documentation eu:name="description">Self-explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">The ultimate recipient of the funds. Normally the account
+owner who is reimbursed by the payor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Beneficiary's bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the account servicer for the beneficiary or
+the payee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Employer</xs:documentation>
+            <xs:documentation eu:name="description">Self-explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Previous employer</xs:documentation>
+            <xs:documentation eu:name="description">Previous employer of a person(s).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer's financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution designated by buyer to make
+payment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Release to party</xs:documentation>
+            <xs:documentation eu:name="description">Party to which the goods or container(s) is (are) to be
+released.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Party acting as financial institution.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Bill of lading recipient</xs:documentation>
+            <xs:documentation eu:name="description">Party to receive B/L.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Insured</xs:documentation>
+            <xs:documentation eu:name="description">Party which is the object of an insurance contract.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Insurance beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">Party which benefits from insurance coverage.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Broker or sales office</xs:documentation>
+            <xs:documentation eu:name="description">Party acting in the name of the seller as broker or as
+sales office.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Building site purchaser</xs:documentation>
+            <xs:documentation eu:name="description">Party at the building site responsible for the purchasing
+of goods and services for that particular site.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Cheque drawn bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the bank on which the cheque should be drawn,
+as instructed by the ordering customer.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Bill and ship to</xs:documentation>
+            <xs:documentation eu:name="description">Party receiving goods and relevant invoice.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to be billed for other than freight (bill to)</xs:documentation>
+            <xs:documentation eu:name="description">Party receiving invoice excluding freight costs.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Service bureau</xs:documentation>
+            <xs:documentation eu:name="description">Party carrying out service bureau processing work, (e.g.
+a payroll bureau).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Member</xs:documentation>
+            <xs:documentation eu:name="description">Member of a group (e.g. of a group of persons or a
+service scheme).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Borrower</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Building site engineer</xs:documentation>
+            <xs:documentation eu:name="description">Party at the building site responsible for engineering
+matters for that particular site.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer</xs:documentation>
+            <xs:documentation eu:name="description">(3002) Party to which merchandise is sold.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="BZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Building site forwarder</xs:documentation>
+            <xs:documentation eu:name="description">Party at the building site responsible for forwarding the
+received goods on that particular site.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="C1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">In care of party no. 1</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="C2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">In care of party no. 2</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Carrier</xs:documentation>
+            <xs:documentation eu:name="description">(3126) Party undertaking or arranging transport of goods
+between named points.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Customs broker</xs:documentation>
+            <xs:documentation eu:name="description">Agent or representative or a professional Customs
+clearing agent who deals directly with Customs on behalf
+of the importer or exporter (CCC).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Claimant</xs:documentation>
+            <xs:documentation eu:name="description">Party who claims goods or insurance.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Agent's bank</xs:documentation>
+            <xs:documentation eu:name="description">Bank of the agent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ceding company</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Container operator/lessee</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the possession of specified property (e.g.
+container) has been conveyed for a period of time in
+return for rental payments.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Carrier's agent</xs:documentation>
+            <xs:documentation eu:name="description">Party authorized to act for or on behalf of carrier.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Connecting carrier</xs:documentation>
+            <xs:documentation eu:name="description">Owner or operator of a transportation conveyance to which
+goods in a given transaction will be transferred.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Commission processor</xs:documentation>
+            <xs:documentation eu:name="description">Party who provides extra treatment to goods on commission
+base.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Previous member</xs:documentation>
+            <xs:documentation eu:name="description">Previous member of a group of persons or a service
+scheme.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Empty equipment despatch party</xs:documentation>
+            <xs:documentation eu:name="description">Party from whose premises empty equipment will be or has
+been despatched.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Container location party</xs:documentation>
+            <xs:documentation eu:name="description">Party from whose premises container will be or has been
+despatched.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Customs</xs:documentation>
+            <xs:documentation eu:name="description">Identification of customs authority relevant to the
+transaction or shipment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignee</xs:documentation>
+            <xs:documentation eu:name="description">(3132) Party to which goods are consigned.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Corporate office</xs:documentation>
+            <xs:documentation eu:name="description">Identification of the Head Office within a company.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="COP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Convoying party</xs:documentation>
+            <xs:documentation eu:name="description">Party designated to escort the transported goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="COQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Nominated bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the nominated bank.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive certificate of compliance</xs:documentation>
+            <xs:documentation eu:name="description">Party acting for or on behalf of seller in matters
+concerning compliance.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Advising bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the financial institution used by the issuing
+bank to advise the documentary credit.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Reimbursing bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the financial institution through which the
+reimbursement is to be effected.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Advise through bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the financial institution through which the
+advising bank is to advise.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Charges payer at destination</xs:documentation>
+            <xs:documentation eu:name="description">Party, other than the ordering party, which has to pay
+the charges concerning the destination operations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Vessel master</xs:documentation>
+            <xs:documentation eu:name="description">Master of the conveyance.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CPF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Means of transport charterer</xs:documentation>
+            <xs:documentation eu:name="description">Charterer of the means of transport.</xs:documentation>
+            <xs:documentation eu:name="change">+</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Cheque order</xs:documentation>
+            <xs:documentation eu:name="description">Party to which the cheque will be ordered, when different
+from the beneficiary.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Empty equipment return party</xs:documentation>
+            <xs:documentation eu:name="description">Party to whose premises empty equipment will be or has
+been returned.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consolidator</xs:documentation>
+            <xs:documentation eu:name="description">Party consolidating various consignments, payments etc.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignee to be specified</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Container return company</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignee of vessel</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Equipment owner</xs:documentation>
+            <xs:documentation eu:name="description">Owner of equipment (container, etc.).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignee's agent</xs:documentation>
+            <xs:documentation eu:name="description">Party authorized to act on behalf of the consignee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Commissionable agent</xs:documentation>
+            <xs:documentation eu:name="description">IATA cargo agent entitled to commission.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="CZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignor</xs:documentation>
+            <xs:documentation eu:name="description">(3336) Party which, by contract with a carrier, consigns
+or sends goods with the carrier, or has them conveyed by
+him. Synonym: shipper, sender.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Available with bank (documentary credits)</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution with whom the documentary credit is
+available.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Distributor branch</xs:documentation>
+            <xs:documentation eu:name="description">The affiliate of a retailer or distributor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Deconsolidator</xs:documentation>
+            <xs:documentation eu:name="description">Party that splits up a large consignment composed of
+separate consignments of goods. The smaller consignments
+of goods were grouped together into that large
+consignment for carriage as a larger unit in order to
+obtain a reduced rate.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DCP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Despatch charge payer</xs:documentation>
+            <xs:documentation eu:name="description">Party, other than the ordering party, which has to pay
+the charges concerning the despatch operations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit account party's bank</xs:documentation>
+            <xs:documentation eu:name="description">Bank of the documentary credit account party.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Depositor</xs:documentation>
+            <xs:documentation eu:name="description">Party depositing goods, financial payments or documents.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit applicant</xs:documentation>
+            <xs:documentation eu:name="description">Party at whose request the applicant's bank/issuing bank
+is to issue a documentary credit.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">Party in whose favour the documentary credit is to be
+issued and the party that must comply with the credit's
+terms and conditions.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit account party</xs:documentation>
+            <xs:documentation eu:name="description">Party which is responsible for the payment settlement of
+the documentary credit with the applicant's bank/issuing
+bank, if different from the documentary credit applicant.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit second beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the documentary credit can be transferred.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party according to documentary credit transaction</xs:documentation>
+            <xs:documentation eu:name="description">Party related to documentary credit transaction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Documentary credit beneficiary's bank</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution with which the beneficiary of the
+documentary credit maintains an account.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Factor</xs:documentation>
+            <xs:documentation eu:name="description">Company offering a financial service whereby a firm sells
+or transfers title to its accounts receivable to the
+factoring company.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to whom documents are to be presented</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Owner of operation</xs:documentation>
+            <xs:documentation eu:name="description">Owner of the operation.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Document recipient</xs:documentation>
+            <xs:documentation eu:name="description">(1370) Party which should receive a specified document.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Delivery party</xs:documentation>
+            <xs:documentation eu:name="description">(3144) Party to which goods should be delivered, if not
+identical with consignee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Owner's agent</xs:documentation>
+            <xs:documentation eu:name="description">Person acting on delegation of powers of the owner.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Driver</xs:documentation>
+            <xs:documentation eu:name="description">Person who drives a means of transport.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Distributor</xs:documentation>
+            <xs:documentation eu:name="description">Party distributing goods, financial payments or
+documents.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Declarant</xs:documentation>
+            <xs:documentation eu:name="description">(3140) Party who makes a declaration to an official body
+or - where legally permitted - in whose name, or on whose
+behalf, a declaration to an official body is made.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Owner's representative</xs:documentation>
+            <xs:documentation eu:name="description">Person commissioned by the owner to represent him in
+certain circumstances.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Project management office</xs:documentation>
+            <xs:documentation eu:name="description">Party commissioned by the owner to follow through the
+execution of all works.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Drawee</xs:documentation>
+            <xs:documentation eu:name="description">Party on whom drafts must be drawn.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Engineer (construction)</xs:documentation>
+            <xs:documentation eu:name="description">Party representing the contractor to advise and supervise
+engineering aspects of the works.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Engineer, resident (construction)</xs:documentation>
+            <xs:documentation eu:name="description">Party commissioned by the owner to advise and supervise
+engineering aspects of the works.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="DZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Architect</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Architect-designer</xs:documentation>
+            <xs:documentation eu:name="description">Designer of the construction project.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Building inspectorate</xs:documentation>
+            <xs:documentation eu:name="description">Party controlling the conformity of works to legal and
+regulation rules.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Exchanger</xs:documentation>
+            <xs:documentation eu:name="description">Party exchanging currencies or goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ED">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Engineer, consultant</xs:documentation>
+            <xs:documentation eu:name="description">Party providing professional engineering services.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Location of goods for customs examination before clearance</xs:documentation>
+            <xs:documentation eu:name="description">SE.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Project coordination office</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for technical coordination of works.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surveyor, topographical</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for topographical measurements.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Engineer, measurement</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for quantity measurements.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Controller, quality</xs:documentation>
+            <xs:documentation eu:name="description">Party controlling the quality of goods and workmanship
+for the project.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surveyor, quantity</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the quantification and valuation of
+the works on behalf of the contractor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surveyor (professional), quantity</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible to the owner for the quantification and
+valuation of the works.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Project</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for a project, e.g. a construction
+project.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive electronic memo of invoice</xs:documentation>
+            <xs:documentation eu:name="description">Party being informed about invoice issue (via EDI).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Tenderer</xs:documentation>
+            <xs:documentation eu:name="description">Firm answering an invitation to tender.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Owner of equipment</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Equipment drop-off party</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Empty container responsible party</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the empty container.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ER">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Empty container return agent</xs:documentation>
+            <xs:documentation eu:name="description">Party, designated by owner of containers, responsible for
+their collection as agreed between the owner and
+customer/ consignee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ES">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contractor, lead</xs:documentation>
+            <xs:documentation eu:name="description">Leader representing a grouping of co-contractors.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ET">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Co-contractor</xs:documentation>
+            <xs:documentation eu:name="description">Member of a grouping of co-contractors.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contractor, general</xs:documentation>
+            <xs:documentation eu:name="description">Single contractor for the whole construction project,
+working by his own or with subcontractors.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Subcontractor</xs:documentation>
+            <xs:documentation eu:name="description">Firm carrying out a part of the works for a contractor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Subcontractor with direct payment</xs:documentation>
+            <xs:documentation eu:name="description">Subcontractor benefiting from direct payments.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Exporter</xs:documentation>
+            <xs:documentation eu:name="description">(3030) Party who makes - or on whose behalf a Customs
+clearing agent or other authorized person makes - an
+export declaration. This may include a manufacturer,
+seller or other person. Within a Customs union, consignor
+may have the same meaning as exporter.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Subcontractor, nominated</xs:documentation>
+            <xs:documentation eu:name="description">Subcontractor authorized by the owner after having been
+proposed.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="EZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Operator, essential services</xs:documentation>
+            <xs:documentation eu:name="description">Operator of essential services e.g. water, sewerage
+system, power.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Operator, communication channel</xs:documentation>
+            <xs:documentation eu:name="description">Operator of a communication channel.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Nominated freight company</xs:documentation>
+            <xs:documentation eu:name="description">Party nominated to act as transport company or carrier
+for the goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contractor, main</xs:documentation>
+            <xs:documentation eu:name="description">Firm or grouping of co-contractors which has been awarded
+the contract.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer's parent company</xs:documentation>
+            <xs:documentation eu:name="description">Parent company, e.g. holding company.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Credit rating agency</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Factor, correspondent</xs:documentation>
+            <xs:documentation eu:name="description">Factoring company engaged by another factoring company to
+assist the letter with the services provided to the
+clients (sellers).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Buyer as officially registered</xs:documentation>
+            <xs:documentation eu:name="description">Buying party as officially registered with government.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Seller as officially registered</xs:documentation>
+            <xs:documentation eu:name="description">Selling party as officially registered with government.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Copy message to</xs:documentation>
+            <xs:documentation eu:name="description">Party that is to receive a copy of a message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Trade Union</xs:documentation>
+            <xs:documentation eu:name="description">Organisation representing employees.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Previous Trade Union</xs:documentation>
+            <xs:documentation eu:name="description">Employee organisation who previously represented an
+employee .</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Passenger</xs:documentation>
+            <xs:documentation eu:name="description">A person conveyed by a means of transport, other than the
+crew.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Crew member</xs:documentation>
+            <xs:documentation eu:name="description">A person manning a means of transport.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Tariff issuer</xs:documentation>
+            <xs:documentation eu:name="description">The issuer of a tariff, e.g. a freight tariff.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party performing inspection</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Freight/charges payer</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the payment of freight.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Container survey agent</xs:documentation>
+            <xs:documentation eu:name="description">The container survey agency that will survey the
+containers.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Message from</xs:documentation>
+            <xs:documentation eu:name="description">Party where the message comes from.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party authorized to make definite a contract action</xs:documentation>
+            <xs:documentation eu:name="description">Party who has the authority to make definite a contract
+action.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party responsible for financial settlement</xs:documentation>
+            <xs:documentation eu:name="description">(3450) Party responsible for either the transfer or
+repatriation of the funds relating to a transaction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Hazardous material office</xs:documentation>
+            <xs:documentation eu:name="description">The office responsible for providing information
+regarding hazardous material.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party providing government furnished property</xs:documentation>
+            <xs:documentation eu:name="description">The party responsible for providing government furnished
+property.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Freight forwarder</xs:documentation>
+            <xs:documentation eu:name="description">Party arranging forwarding of goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Current receiver</xs:documentation>
+            <xs:documentation eu:name="description">Current receiver of the goods in a multi-step
+transportation process (indirect flow) involving at least
+one grouping centre.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Current sender</xs:documentation>
+            <xs:documentation eu:name="description">Current sender of the goods in a multi-step
+transportation process (indirect flow) involving at least
+one grouping centre.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="FZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Grouping centre</xs:documentation>
+            <xs:documentation eu:name="description">A party in charge of groupage, including degroupage and
+regroupage.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Road carrier</xs:documentation>
+            <xs:documentation eu:name="description">A road carrier moving cargo.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Chamber of commerce</xs:documentation>
+            <xs:documentation eu:name="description">Name of the Chamber of Commerce of the town where the
+company is registered.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Goods custodian</xs:documentation>
+            <xs:documentation eu:name="description">(3024) Party responsible for the keeping of goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Producer</xs:documentation>
+            <xs:documentation eu:name="description">Party or person who has produced the produce.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Registration tribunal</xs:documentation>
+            <xs:documentation eu:name="description">Name of the tribunal where the company is registered.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Slot charter party</xs:documentation>
+            <xs:documentation eu:name="description">An identification code of a participant or user that
+books slots (space) on a ship, more likely on a long term
+basis on a series of sailings. He pays for the space
+whether he uses it or not.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Warehouse</xs:documentation>
+            <xs:documentation eu:name="description">The name of the warehouse where product is held.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Applicant for job</xs:documentation>
+            <xs:documentation eu:name="description">A person who applied for a job.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Spouse</xs:documentation>
+            <xs:documentation eu:name="description">Person is a spouse.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Mother</xs:documentation>
+            <xs:documentation eu:name="description">Person is a mother.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Father</xs:documentation>
+            <xs:documentation eu:name="description">Person is a father.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Socially insured person</xs:documentation>
+            <xs:documentation eu:name="description">A person who is registered in a social security scheme.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Inventory controller</xs:documentation>
+            <xs:documentation eu:name="description">To specifically identify the party in charge of inventory
+control.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Processor</xs:documentation>
+            <xs:documentation eu:name="description">Party or person who has or will apply a process.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Goods owner</xs:documentation>
+            <xs:documentation eu:name="description">The party which owns the goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Packer</xs:documentation>
+            <xs:documentation eu:name="description">Party or person who has undertaken or will undertake
+packing.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Slaughterer</xs:documentation>
+            <xs:documentation eu:name="description">Party or person who has undertaken or will undertake a
+slaughter.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Goods releaser</xs:documentation>
+            <xs:documentation eu:name="description">(3026) Party entitled to authorize release of goods from
+custodian.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Consignor's representative</xs:documentation>
+            <xs:documentation eu:name="description">Party authorised to represent the consignor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Rail carrier</xs:documentation>
+            <xs:documentation eu:name="description">A carrier moving cargo, including containers, via rail.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Originator of article number</xs:documentation>
+            <xs:documentation eu:name="description">A code identifying the party which created a specific
+article number.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Procurement responsibility for order</xs:documentation>
+            <xs:documentation eu:name="description">A code used to identify the organization which is
+responsible for the procurement.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party fulfilling all operations</xs:documentation>
+            <xs:documentation eu:name="description">Code indicating the fact that the party identified
+carries out all operations within that company's
+activities.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Central catalogue party</xs:documentation>
+            <xs:documentation eu:name="description">Party controlling a central catalogue.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Inventory reporting party</xs:documentation>
+            <xs:documentation eu:name="description">Party reporting inventory information.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="GZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Substitute supplier</xs:documentation>
+            <xs:documentation eu:name="description">Party which may be in a position to supply products or
+services should the main usual supplier be unable to do
+so.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party which delivers consignments to the terminal</xs:documentation>
+            <xs:documentation eu:name="description">Party which delivers consignments to a terminal.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party which picks up consignments from the terminal</xs:documentation>
+            <xs:documentation eu:name="description">Party which picks up consignments from a terminal.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transit freight forwarder</xs:documentation>
+            <xs:documentation eu:name="description">Freight forwarder to whom transit consignments are
+addressed, and from whom they are to be on-forwarded.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Inspection and acceptance party</xs:documentation>
+            <xs:documentation eu:name="description">The party who will perform inspection and acceptance.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transportation office</xs:documentation>
+            <xs:documentation eu:name="description">The office that provides transportation information.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contract administration office</xs:documentation>
+            <xs:documentation eu:name="description">The office responsible for the administration of a
+contract.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Investigator</xs:documentation>
+            <xs:documentation eu:name="description">A party who conducts investigations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Audit office</xs:documentation>
+            <xs:documentation eu:name="description">The office responsible for conducting audits.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Requestor</xs:documentation>
+            <xs:documentation eu:name="description">The party requesting an action.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Foreign disclosure information office</xs:documentation>
+            <xs:documentation eu:name="description">The office that reviews sensitive information for foreign
+disclosure.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Mark-for party</xs:documentation>
+            <xs:documentation eu:name="description">The party within an organization for whom the material is
+marked to be delivered.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive reports</xs:documentation>
+            <xs:documentation eu:name="description">The party to whom reports are to be submitted.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Alternative manufacturer</xs:documentation>
+            <xs:documentation eu:name="description">Party identification of an alternative manufacturer for a
+product.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Service performer</xs:documentation>
+            <xs:documentation eu:name="description">The party who is performing a service.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Shipper's association</xs:documentation>
+            <xs:documentation eu:name="description">An association of shippers.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Final message recipient</xs:documentation>
+            <xs:documentation eu:name="description">To identify the final recipient of the message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Account owner</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the owner of the account.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="HR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Shipping line service</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the shipping line service organization.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="I1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Intermediary bank 1</xs:documentation>
+            <xs:documentation eu:name="description">A financial institution between the ordered bank and the
+beneficiary's bank.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="I2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Intermediary bank 2</xs:documentation>
+            <xs:documentation eu:name="description">A financial institution between the ordered bank and the
+beneficiary's bank.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Intermediary/broker</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Intermediate consignee</xs:documentation>
+            <xs:documentation eu:name="description">The intermediate consignee.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ID">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Replacing manufacturer</xs:documentation>
+            <xs:documentation eu:name="description">A code used to identify a party who replaces the previous
+party for the manufacture of an article.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident third party company with whom financial account is held</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the non-resident third party company with whom
+the financial account is held.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident group company with whom financial account is held</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the non-resident group company with whom the
+financial account is held.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">The ultimate non-resident recipient of the funds.
+Normally the account owner who is reimbursed by the
+payor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Resident beneficiary</xs:documentation>
+            <xs:documentation eu:name="description">The ultimate resident recipient of the funds. Normally
+the account owner who is reimbursed by the payor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="II">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Issuer of invoice</xs:documentation>
+            <xs:documentation eu:name="description">(3028) Party issuing an invoice.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident instructing party</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the non-resident party originating the
+instruction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Resident instructing party</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the resident party originating the
+instruction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Importer</xs:documentation>
+            <xs:documentation eu:name="description">(3020) Party who makes - or on whose behalf a Customs
+clearing agent or other authorized person makes - an
+import declaration. This may include a person who has
+possession of the goods or to whom the goods are
+consigned.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Insurer</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Insurance company</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Insurance claim adjuster</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Domestic financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Domestic party acting as financial institution.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-domestic financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Non-domestic party acting as financial institution.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive certified inspection report</xs:documentation>
+            <xs:documentation eu:name="description">Party (at buyer) to receive certified inspection report.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Installation on site</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident debtor</xs:documentation>
+            <xs:documentation eu:name="description">Non-resident party who makes the payment or against whom
+a claim exists.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Invoicee</xs:documentation>
+            <xs:documentation eu:name="description">(3006) Party to whom an invoice is issued.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="IW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Non-resident creditor</xs:documentation>
+            <xs:documentation eu:name="description">Non-resident party receiving the payment or against whom
+a liability exists.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="LA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party designated to provide living animal care</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible to take care of transported living
+animals.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="LB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Coproducer</xs:documentation>
+            <xs:documentation eu:name="description">A code used to identify a party who participates in
+production.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="LN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Lender</xs:documentation>
+            <xs:documentation eu:name="description">Party lending goods or equipments.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="LP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Loading party</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the loading when other than
+carrier.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party for whom item is ultimately intended</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Manufacturer of goods</xs:documentation>
+            <xs:documentation eu:name="description">Party who manufactures the goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party designated to execute re-icing</xs:documentation>
+            <xs:documentation eu:name="description">Party designated to execute re-icing, selected in the
+official list of mandatories competent for this kind of
+operation.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Planning schedule/material release issuer</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Manufacturing plant</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Message recipient</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Document/message issuer/sender</xs:documentation>
+            <xs:documentation eu:name="description">Issuer of a document and/or sender of a message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="MT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party designated to execute sanitary procedures</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="N1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Notify party no. 1</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="N2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Notify party no. 2</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="NI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Notify party</xs:documentation>
+            <xs:documentation eu:name="description">(3180) Party to be notified of arrival of goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Break bulk berth operator</xs:documentation>
+            <xs:documentation eu:name="description">Party who offers facilities for berthing of vessels,
+handling and storage of break bulk cargo.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ordered by</xs:documentation>
+            <xs:documentation eu:name="description">Party who issued an order.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">On behalf of</xs:documentation>
+            <xs:documentation eu:name="description">Party on behalf of which an action is executed.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Outside inspection agency</xs:documentation>
+            <xs:documentation eu:name="description">Third party inspecting goods or equipment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Order of shipper</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Operator of property or unit</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ordered bank</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the account servicer for the ordering customer
+or payor.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Original shipper</xs:documentation>
+            <xs:documentation eu:name="description">The original supplier of the goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Outside test agency</xs:documentation>
+            <xs:documentation eu:name="description">Third party testing goods, equipment or services.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Owner of means of transport</xs:documentation>
+            <xs:documentation eu:name="description">(3126) Party owning the means of transport. No synonym of
+carrier = CA.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="OY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ordering customer</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the originator of the instruction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="P1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact party 1</xs:documentation>
+            <xs:documentation eu:name="description">First party to contact.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="P2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact party 2</xs:documentation>
+            <xs:documentation eu:name="description">Second party to contact.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="P3">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact party 3</xs:documentation>
+            <xs:documentation eu:name="description">Third party to contact.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="P4">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact party 4</xs:documentation>
+            <xs:documentation eu:name="description">Fourth party to contact.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive inspection report</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the inspection report should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Paying financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution designated to make payment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Actual purchaser's customer</xs:documentation>
+            <xs:documentation eu:name="description">Party the purchaser within the actual message is selling
+the ordered goods or services to.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Purchaser's department buyer</xs:documentation>
+            <xs:documentation eu:name="description">Purchasing department of buyer.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payee</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the credit party when other than the
+beneficiary.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive freight bill</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the freight bill should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Prime contractor</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the whole project if other than the
+buyer.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payer's financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payee's company name/ID</xs:documentation>
+            <xs:documentation eu:name="description">Receiving company name/ID (ACH transfers).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PJ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive correspondence</xs:documentation>
+            <xs:documentation eu:name="description">Second party designated by a first party to receive
+certain correspondence in lieu of it being mailed
+directly to this first party.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Contact party</xs:documentation>
+            <xs:documentation eu:name="description">Party to contact.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payor</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the debit party when other than the ordering
+customer (for banking purposes).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive paper memo of invoice</xs:documentation>
+            <xs:documentation eu:name="description">Party being informed about invoice issue (via paper).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive shipping notice</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ordering party</xs:documentation>
+            <xs:documentation eu:name="description">To be used only if ordering party and buyer are not
+identical.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PQ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Certifying party</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payer</xs:documentation>
+            <xs:documentation eu:name="description">(3308) Party initiating payment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Payer's company name/ID (Check, Draft or Wire)</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive test report</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Despatch party</xs:documentation>
+            <xs:documentation eu:name="description">(3282) Party where goods are collected or taken over by
+the carrier (i.e. if other than consignor).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive all documents</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Checking party</xs:documentation>
+            <xs:documentation eu:name="description">Party or contact designated on behalf of carrier or his
+agent to establish the actual figures for quantities,
+weight, volume and/or (cube) measurements of goods or
+containers which are to appear in the transport contract
+and on which charges will be based.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="PZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to print some document</xs:documentation>
+            <xs:documentation eu:name="description">The party that is to print a specific document.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Central bank or regulatory authority</xs:documentation>
+            <xs:documentation eu:name="description">Identifies central bank or regulatory authority which
+must be informed of certain aspects of a message.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Receiving financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution designated to receive payment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive commercial invoice remittance</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom payment for a commercial invoice or bill
+should be remitted.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Received from</xs:documentation>
+            <xs:documentation eu:name="description">Name of a person or department which actually delivers
+the goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Seller's financial institution</xs:documentation>
+            <xs:documentation eu:name="description">Financial institution designated by seller to receive
+payment. RDFI (ACH transfers).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Reinsurance intermediary/broker</xs:documentation>
+            <xs:documentation eu:name="description">Intermediary party between ceding company and
+reinsurance.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RL">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Reporting carrier (Customs)</xs:documentation>
+            <xs:documentation eu:name="description">Party who makes the cargo report to Customs.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Reporting carrier's nominated agent/representative (Customs)</xs:documentation>
+            <xs:documentation eu:name="description">Agent who formally makes a cargo report to Customs on
+behalf of the carrier.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Routing party</xs:documentation>
+            <xs:documentation eu:name="description">Party responsible for the selection of the carrier(s).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive statement of account</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the statement of account should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RV">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Receiver of cheque</xs:documentation>
+            <xs:documentation eu:name="description">Identifies the party which is to receive the actual
+cheque, when different from the receiver of funds.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="RW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Issuer of waybill</xs:documentation>
+            <xs:documentation eu:name="description">Party issuing the contract (waybill) for carriage.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Sales responsibility</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Seller</xs:documentation>
+            <xs:documentation eu:name="description">(3346) Party selling merchandise to a buyer.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SF">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ship from</xs:documentation>
+            <xs:documentation eu:name="description">Identification of the party from where goods will be or
+have been shipped.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SG">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Store group</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Shipping schedule issuer</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SK">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Plant</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Store keeper</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SO">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Sold to if different than bill to</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Seller's agent/representative</xs:documentation>
+            <xs:documentation eu:name="description">(3254) Party representing the seller for the purpose of
+the trade transaction.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Social securities collector's office</xs:documentation>
+            <xs:documentation eu:name="description">Party collecting social securities premiums.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ST">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ship to</xs:documentation>
+            <xs:documentation eu:name="description">Identification of the party to where goods will be or
+have been shipped.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SU">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Supplier</xs:documentation>
+            <xs:documentation eu:name="description">(3280) Party which manufactures or otherwise has
+possession of goods, and consigns or makes them available
+in trade.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SX">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surety for additions</xs:documentation>
+            <xs:documentation eu:name="description">Natural of legal person (generally a bank of insurance
+company) who accepts responsibility in due legal form for
+the financial guarantee to Customs of the payment of
+additional duties or fees that become due against a
+particular shipment, which have not previously been
+covered by surety.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SY">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surety</xs:documentation>
+            <xs:documentation eu:name="description">Natural or legal person (generally a bank or insurance
+company) who accepts responsibility in due legal form for
+the financial consequences of non-fulfilment of another's
+obligations to the Customs (CCC).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="SZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Surety for antidumping/countervailing duty</xs:documentation>
+            <xs:documentation eu:name="description">Natural or legal person that has been contracted by the
+importer to guarantee to Customs the payment of
+antidumping and/or countervailing duties that become due
+against a particular shipment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Tax collector's office</xs:documentation>
+            <xs:documentation eu:name="description">Party collecting taxes.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TCP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transit charge payer</xs:documentation>
+            <xs:documentation eu:name="description">Party, other than the ordering party, which has to pay
+the charges concerning the transit operations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive technical documentation</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom technical documentation should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TR">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Terminal operator</xs:documentation>
+            <xs:documentation eu:name="description">A party which handles the loading and unloading of marine
+vessels.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Party to receive certified test results</xs:documentation>
+            <xs:documentation eu:name="description">Party to whom the certified test results should be sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="TT">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Transfer to</xs:documentation>
+            <xs:documentation eu:name="description">Self-explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="UC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ultimate consignee</xs:documentation>
+            <xs:documentation eu:name="description">Party who has been designated on the invoice or packing
+list as the final recipient of the stated merchandise.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="UD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Ultimate customer</xs:documentation>
+            <xs:documentation eu:name="description">The final recipient of goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="UHP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Unexpected handling party</xs:documentation>
+            <xs:documentation eu:name="description">Party authorized (during a voyage) to apply unexpected
+handling procedures or party having applied these
+procedures.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="UP">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Unloading party</xs:documentation>
+            <xs:documentation eu:name="description">Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="VN">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Vendor</xs:documentation>
+            <xs:documentation eu:name="description">Party vending goods or services.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="WD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Warehouse depositor</xs:documentation>
+            <xs:documentation eu:name="description">(3004) Party depositing goods in a warehouse.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="WH">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Warehouse keeper</xs:documentation>
+            <xs:documentation eu:name="description">(3022) Party taking responsibility for goods entered into
+a warehouse.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="WM">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Works manager</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="WPA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Weighting party</xs:documentation>
+            <xs:documentation eu:name="description">Party designated (legally accepted) to ascertain the
+weight.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="WS">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Wholesaler</xs:documentation>
+            <xs:documentation eu:name="description">Seller of articles, often in large quantities, to be
+retailed by others.
+XX     No heading
+Description to be provided.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZZZ">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Mutually defined</xs:documentation>
+            <xs:documentation eu:name="description">Party specification mutually agreed between interchanging
+parties.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZN2" />
+        <xs:enumeration value="ZN3" />
+        <xs:enumeration value="ZN4" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="NAD.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">NAME AND ADDRESS</xs:documentation>
+      <xs:documentation eu:name="function">To specify the name/address and their related function, either by CO82 only and/or unstructured by CO58 or structured by CO80 thru 3207.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D3035" type="D3035.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PARTY QUALIFIER</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C082" type="C082" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PARTY IDENTIFICATION DETAILS</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C058" type="C058" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">NAME AND ADDRESS</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C080" type="C080" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PARTY NAME</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C059" type="C059" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">STREET</xs:documentation>
+              <xs:documentation eu:name="position">050</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D3164" type="D3164" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">CITY NAME</xs:documentation>
+              <xs:documentation eu:name="position">060</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D3229" type="D3229" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">COUNTRY SUB-ENTITY IDENTIFICATION</xs:documentation>
+              <xs:documentation eu:name="position">070</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D3251" type="D3251" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">POSTCODE IDENTIFICATION</xs:documentation>
+              <xs:documentation eu:name="position">080</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D3207" type="D3207" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">COUNTRY, CODED</xs:documentation>
+              <xs:documentation eu:name="position">090</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D4451.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Text subject qualifier</xs:documentation>
+      <xs:documentation eu:name="description">Code specifying subject of a free text.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="AAA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Goods description</xs:documentation>
+            <xs:documentation eu:name="description">[7002] Plain language description of the nature of the
+goods sufficient to identify them at the level required
+for banking, Customs, statistical or transport purposes,
+avoiding unnecessary detail (Generic term).</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Dangerous goods additional information</xs:documentation>
+            <xs:documentation eu:name="description">Additional information concerning dangerous goods.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Dangerous goods, technical name</xs:documentation>
+            <xs:documentation eu:name="description">Proper shipping name, supplemented as necessary with the
+correct technical name, by which a dangerous substance or
+article may be correctly identified or which is
+sufficiently informative to permit identification by
+reference to generally available literature.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">General information</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AEB">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Temperature control instructions</xs:documentation>
+            <xs:documentation eu:name="description">Instruction regarding the temperature control of the
+cargo.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="LOI">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Loading instruction</xs:documentation>
+            <xs:documentation eu:name="description">Instructions where specified packages or containers are
+to be loaded on a means of transport.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZCI" />
+        <xs:enumeration value="ZCS" />
+        <xs:enumeration value="ZCT" />
+        <xs:enumeration value="ZGL" />
+        <xs:enumeration value="ZLQ" />
+        <xs:enumeration value="ZND" />
+        <xs:enumeration value="ZSD" />
+        <xs:enumeration value="ZSB" />
+        <xs:enumeration value="ZSS" />
+        <xs:enumeration value="ZTI" />
+        <xs:enumeration value="ZTT" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="FTX.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">FREE TEXT</xs:documentation>
+      <xs:documentation eu:name="function">To provide free form or coded text information.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D4451" type="D4451.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">TEXT SUBJECT QUALIFIER</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D4453" type="D4453" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">TEXT FUNCTION, CODED</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C107" type="C107" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">TEXT REFERENCE</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C108" type="C108" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">TEXT LITERAL</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D3453" type="D3453" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">LANGUAGE, CODED</xs:documentation>
+              <xs:documentation eu:name="position">050</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D6311.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Measurement purpose qualifier</xs:documentation>
+      <xs:documentation eu:name="description">Specification of the purpose of the measurement.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="AAA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Line item measurement</xs:documentation>
+            <xs:documentation eu:name="description">Line item measurement specified by the Food and Drug
+Administration.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAE">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Measurement</xs:documentation>
+            <xs:documentation eu:name="description">[6314] Value of the measured unit.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Accuracy</xs:documentation>
+            <xs:documentation eu:name="description">Accuracy of the measurements being sent.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZST" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="MEA.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">MEASUREMENTS</xs:documentation>
+      <xs:documentation eu:name="function">To specify physical measurements, including dimension tolerances, weights and counts.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D6311" type="D6311.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">MEASUREMENT PURPOSE QUALIFIER</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C502" type="C502.1" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">MEASUREMENT DETAILS</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C174" type="C174" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">VALUE/RANGE</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D7383" type="D7383" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">SURFACE/LAYER INDICATOR, CODED</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D6313.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Property measured, coded</xs:documentation>
+      <xs:documentation eu:name="description">Specification of the property measured.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="AAA">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Unit net weight</xs:documentation>
+            <xs:documentation eu:name="description">[6160] Weight (mass) of goods including any packing
+normally going with them to a buyer in a retail sale.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAC">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Total net weight</xs:documentation>
+            <xs:documentation eu:name="description">Self explanatory.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAD">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Total gross weight</xs:documentation>
+            <xs:documentation eu:name="description">[6292] Weight (mass) of goods including packing but
+excluding the carrier's equipment.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="AAW">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Gross volume</xs:documentation>
+            <xs:documentation eu:name="description">The observed volume unadjusted for factors such as
+temperature or gravity.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="T">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Tare weight</xs:documentation>
+            <xs:documentation eu:name="description">Weight excluding goods and loose accessories.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="U">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Weight per unit</xs:documentation>
+            <xs:documentation eu:name="description">[6150] Numeric value of weight.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="ZPC" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="C502.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">MEASUREMENT DETAILS</xs:documentation>
+      <xs:documentation eu:name="description">Identification of measurement type.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="D6313" type="D6313.1" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Property measured, coded</xs:documentation>
+          <xs:documentation eu:name="position">010</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D6321" type="D6321" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Measurement significance, coded</xs:documentation>
+          <xs:documentation eu:name="position">020</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D6155" type="D6155" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Measurement attribute identification</xs:documentation>
+          <xs:documentation eu:name="position">030</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D6154" type="D6154" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Measurement attribute</xs:documentation>
+          <xs:documentation eu:name="position">040</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="D8053.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Equipment qualifier</xs:documentation>
+      <xs:documentation eu:name="description">Code identifying type of equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="4" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="EQD.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">EQUIPMENT DETAILS</xs:documentation>
+      <xs:documentation eu:name="function">To identify a unit of equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D8053" type="D8053.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT QUALIFIER</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C237" type="C237" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT IDENTIFICATION</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C224" type="C224.1" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT SIZE AND TYPE</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8077" type="D8077" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT SUPPLIER, CODED</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8249" type="D8249" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT STATUS, CODED</xs:documentation>
+              <xs:documentation eu:name="position">050</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8169" type="D8169" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">FULL/EMPTY INDICATOR, CODED</xs:documentation>
+              <xs:documentation eu:name="position">060</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EQA.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">ATTACHED EQUIPMENT</xs:documentation>
+      <xs:documentation eu:name="function">To specify attached or related equipment.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D8053" type="D8053.1">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT QUALIFIER</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C237" type="C237" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EQUIPMENT IDENTIFICATION</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D8155.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Equipment size and type identification</xs:documentation>
+      <xs:documentation eu:name="description">Coded description of the size and type of equipment e.g. unit
+load device.</xs:documentation>
+      <xs:documentation eu:name="note">User or association defined code. May be used in combination
+with 1131/3055. See ISO 6346 for seagoing containers.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="10" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="C224.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">EQUIPMENT SIZE AND TYPE</xs:documentation>
+      <xs:documentation eu:name="description">Code and/or name identifying size and type of equipment
+used in transport. Code preferred.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="D8155" type="D8155.1" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Equipment size and type identification</xs:documentation>
+          <xs:documentation eu:name="position">010</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D1131" type="D1131" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Code list qualifier</xs:documentation>
+          <xs:documentation eu:name="position">020</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D3055" type="D3055" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Code list responsible agency, coded</xs:documentation>
+          <xs:documentation eu:name="position">030</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="D8154" type="D8154" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation eu:name="name">Equipment size and type</xs:documentation>
+          <xs:documentation eu:name="position">040</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="D8339.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Packing group, coded</xs:documentation>
+      <xs:documentation eu:name="description">Identification of a packing group by code.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="3" />
+        <xs:enumeration value="1">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Great danger</xs:documentation>
+            <xs:documentation eu:name="description">Packaging meeting criteria to pack hazardous materials
+with great danger. Group I according to IATA/IMDG/ADR/RID
+regulations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="2">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Medium danger</xs:documentation>
+            <xs:documentation eu:name="description">Packaging meeting criteria to pack hazardous materials
+with medium danger. Group II according to
+IATA/IDMG/ADR/RID regulations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="3">
+          <xs:annotation>
+            <xs:documentation eu:name="name">Minor danger</xs:documentation>
+            <xs:documentation eu:name="description">Packaging meeting criteria to pack hazardous materials
+with minor danger. Group III according to
+IATA/IDMG/ADR/RID regulations.</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="I" />
+        <xs:enumeration value="II" />
+        <xs:enumeration value="III" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="DGS.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">DANGEROUS GOODS</xs:documentation>
+      <xs:documentation eu:name="function">To identify dangerous goods.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D8273" type="D8273" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">DANGEROUS GOODS REGULATIONS, CODED</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C205" type="C205" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">HAZARD CODE</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C234" type="C234" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">UNDG INFORMATION</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C223" type="C223" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">DANGEROUS GOODS SHIPMENT FLASHPOINT</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8339" type="D8339.1" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PACKING GROUP, CODED</xs:documentation>
+              <xs:documentation eu:name="position">050</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8364" type="D8364.1" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">EMS NUMBER</xs:documentation>
+              <xs:documentation eu:name="position">060</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8410" type="D8410" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">MFAG</xs:documentation>
+              <xs:documentation eu:name="position">070</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8126" type="D8126" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">TREM CARD NUMBER</xs:documentation>
+              <xs:documentation eu:name="position">080</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C235" type="C235" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">HAZARD IDENTIFICATION PLACARD DETAILS</xs:documentation>
+              <xs:documentation eu:name="position">090</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C236" type="C236" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">DANGEROUS GOODS LABEL</xs:documentation>
+              <xs:documentation eu:name="position">100</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8255" type="D8255" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PACKING INSTRUCTION, CODED</xs:documentation>
+              <xs:documentation eu:name="position">110</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8325" type="D8325" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">CATEGORY OF MEANS OF TRANSPORT, CODED</xs:documentation>
+              <xs:documentation eu:name="position">120</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D8211" type="D8211" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">PERMISSION FOR TRANSPORT, CODED</xs:documentation>
+              <xs:documentation eu:name="position">130</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="D8364.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">EMS number</xs:documentation>
+      <xs:documentation eu:name="description">Emergency procedures for ships carrying dangerous goods.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="7" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="D9308.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">Seal number</xs:documentation>
+      <xs:documentation eu:name="description">The number of a custom seal or another seal affixed to the
+containers or other transport unit.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:restriction base="D">
+        <xs:maxLength value="100" />
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="SEL.1">
+    <xs:annotation>
+      <xs:documentation eu:name="name">SEAL NUMBER</xs:documentation>
+      <xs:documentation eu:name="change">*|</xs:documentation>
+      <xs:documentation eu:name="function">To specify the seal number or a range of seal numbers.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BASE-SEGMENT">
+        <xs:sequence>
+          <xs:element name="D9308" type="D9308.1" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">SEAL NUMBER</xs:documentation>
+              <xs:documentation eu:name="change">*</xs:documentation>
+              <xs:documentation eu:name="position">010</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C215" type="C215" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">SEAL ISSUER</xs:documentation>
+              <xs:documentation eu:name="position">020</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="D4517" type="D4517" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">SEAL CONDITION, CODED</xs:documentation>
+              <xs:documentation eu:name="position">030</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="C208" type="C208" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation eu:name="name">IDENTITY NUMBER RANGE</xs:documentation>
+              <xs:documentation eu:name="change">+</xs:documentation>
+              <xs:documentation eu:name="position">040</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
